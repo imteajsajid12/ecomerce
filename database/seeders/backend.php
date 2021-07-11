@@ -15,12 +15,11 @@ class backend extends Seeder
      */
     public function run()
     {
-        //
-             //
-             DB::table('admins')->insert([
-                'name' => 'sajid',
-                'email' =>'imteajsajid1@gmail.com',
-                'password' => Hash::make('12sajid34'),
-            ]);
+
+        DB::table('admins')->insert([
+            'name' => 'sajid',
+            'email' => 'imteajsajid1@gmail.com',
+            'password' => Hash::make('12sajid34'),
+        ]);
     }
 }

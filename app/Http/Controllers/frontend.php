@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\categories;
 use App\Models\Contact;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
@@ -11,24 +12,29 @@ use Illuminate\Http\Request;
 
 class frontend extends Controller
 {
-    function index()
+    public function index()
     {
-        return view('index')->with('product', Product::where('catagory', 'women')->latest()->get())->with('product1', Product::where('catagory', 'men')->latest()->get());
+        return view('index')
+        ->with('product', Product::where('catagory', 'women')->latest()->get())
+        ->with('product1', Product::where('catagory', 'men')->latest()->get());
     }
-    function Shop()
+    public function Shop()
     {
-        return view('shop')->with('product', Product::all());
+        return view('shop')
+        ->with('product', Product::paginate(20))
+        ->with('categories',categories::all());
     }
-    function cart()
+    public function cart()
     {
         $user_id = Auth::id();
-        return view('shopping-cart')->with('product', cart::where('user_id', $user_id)->get());
+        return view('shopping-cart')
+        ->with('product', cart::where('user_id', $user_id)->get());
     }
-    function blog()
+    public function blog()
     {
         return view('blog');
     }
-    function contacts()
+    public function contacts()
     {
         return view('contact');
     }
@@ -41,26 +47,29 @@ class frontend extends Controller
         $contact->save();
         return back();
     }
-    function chakout()
+    public function chakout()
     {
         $user_id = Auth::id();
-        return view('checkout')->with('product', cart::where('user_id', $user_id)->get());
+        return view('checkout')
+        ->with('product', cart::where('user_id', $user_id)->get());
     }
-    function about()
+    public  function about()
     {
         return view('about');
     }
-    function shop_details()
+    public function shop_details()
     {
         return view('shop-details');
     }
-    function  blog_details()
+    public function  blog_details()
     {
         return view(' blog-details');
     }
-    function  detelse($id)
+    public function  detelse($id)
     {
-        return view(' shop-details')->with('product', Product::find($id))->with('products', Product::all());
+        return view(' shop-details')
+        ->with('product', Product::find($id))
+        ->with('products', Product::all());
     }
     //cart
     public function cart1(Request $req)
@@ -92,13 +101,12 @@ class frontend extends Controller
 
 
     //admin
-    function  admin()
+    public function  admin()
     {
         return view('admin');
     }
     public function admin1(Product  $member, Request $req)
     {
-
         $image = $req->file('photo');
 
         $file_name = time() . '.' . $image->getClientOriginalExtension();
@@ -110,9 +118,9 @@ class frontend extends Controller
         $req->photo2->move('image/', $file_name2);
         //3
         $image3 = $req->file('photo3');
-
         $file_name3 = time() . '2' . '.' . $image3->getClientOriginalExtension();
         $req->photo3->move('image/', $file_name3);
+
         $data = $req->all();
         $member->name = $data['name'];
         $member->detelse = $data['detelse'];
@@ -121,60 +129,32 @@ class frontend extends Controller
         $member->image = $file_name;
         $member->image2 = $file_name2;
         $member->image3 = $file_name3;
-
-
-
         $member->save();
-
-
-
-
-
         return redirect('/admin');
     }
 
-    function  test()
+    public function  test()
     {
-        return view('emails.demoMail')->with('product', Order::all());
+        return view('emails.demoMail')
+        ->with('product', Order::all());
     }
-
-
     //
     //product
-    function  man()
+    public function  categories($id)
     {
-        return view('shop')->with('product', Product::where('catagory', 'Men')->get());
+        return view('shop')
+        ->with('product', Product::where('catagory', $id)->paginate(20))
+        ->with('categories',categories::all());
+
     }
-    function  women()
-    {
-        return view('shop')->with('product', Product::where('catagory', 'Women')->get());
-    }
-    function  bag()
-    {
-        return view('shop')->with('product', Product::where('catagory', 'Bags')->get());
-    }
-    function  clothing()
-    {
-        return view('shop')->with('product', Product::where('catagory', 'Clothing')->get());
-    }
-    function  shoes()
-    {
-        return view('shop')->with('product', Product::where('catagory', 'Shoes')->get());
-    }
-    function  accessories()
-    {
-        return view('shop')->with('product', Product::where('catagory', 'Accessories')->get());
-    }
-    function  kids()
-    {
-        return view('shop')->with('product', Product::where('catagory', 'Kids')->get());
-    }
-    //end
+
     // scearch
 
     public function scearch(Request $req)
     {
-
-        return view('shop')->with('product', Product::where('name', 'like', '%' . $req->input('qurey') . '%')->get());
+        return view('shop')
+        ->with('product', Product::where('name', 'like', '%' . $req->input('qurey') . '%')
+        -> orwhere('catagory', 'like', '%' . $req->input('qurey') . '%')->paginate(20))
+        ->with('categories',categories::all());
     }
 }

@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <form action="{{ route('addcart') }}" method="POST">
     @csrf
     <!-- Shop Details Section Begin -->
@@ -79,29 +78,29 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">
-                            <h4>{{$product->name  }}</h4>
-
-                            <h3>Price:-  {{ $product->price }}Tk</h3>
+                            <h4>{{$product->name }}</h4>
+                            <h3>Price:- {{ $product->price }}Tk</h3>
                             <p> {{ $product->detelse }}</p>
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Size:</span>
                                     <label for="xxl">xxl
-                                        <input type="radio"  value="XXl" name="size" id="xxl">
+                                        <input type="radio" value="XXl" name="size" id="xxl">
                                     </label>
-                                    <label class="active"  for="xl">xl
-                                        <input type="radio"  value="XL" name="size" id="xl">
+                                    <label class="active" for="xl">xl
+                                        <input type="radio" value="XL" name="size" id="xl">
                                     </label>
                                     <label for="l">l
-                                        <input type="radio"  value="L" name="size" id="l">
+                                        <input type="radio" value="L" name="size" id="l">
                                     </label>
                                     <label for="sm">s
-                                        <input type="radio"  value="S" name="size" id="sm">
+                                        <input type="radio" value="S" name="size" id="sm">
                                     </label>
                                 </div>
-                                <div class="product__details__option__color">
+                                <div class="product__details__option__size">
                                     <span>Color:</span>
-                                    <label class="c-1" for="sp-1">
+                            
+                                    {{--<label class="c-1" for="sp-1">
                                         <input type="radio" value="black" name="color" id="sp-1">
                                     </label>
                                     <label class="c-2" for="sp-2">
@@ -116,29 +115,28 @@
                                     <label class="c-9" for="sp-9">
                                         <input type="radio" value="white" name="color" id="sp-9">
                                     </label>
+                                    <label class="c-10" value="black"for="sp">
+                                        <input type="radio" value="green" name="color" id="sp-">
+                                    </label>--}}
+                                    <input class="form-control" value="" list="browsers" name="color" required="" />
+                                    <datalist id="browsers">
+                                        @foreach ($product->color as $color)
+                                        <option>{{$color}}</option>
+                                        @endforeach
+                                    </datalist>
                                 </div>
                             </div>
-
-
-
-
-
                             <input type="text" name="product_id" value="{{ $product->id }}" hidden>
-
-
-
-
                             <div class="product__details__cart__option">
                                 <div class="quantity">
 
                                     <div class="pro-qty">
 
-                                      <input type="text" name="quantity" placeholder="quantity" value="1">
+                                        <input type="text" name="quantity" placeholder="quantity" value="1">
                                     </div>
                                 </div>
-                                <button type="submit"  class="primary-btn">add to cart</button>
+                                <button type="submit" class="primary-btn">add to cart</button>
                             </div>
-
                             <div class="product__details__last__option">
                                 <h5><span>Guaranteed Safe Checkout</span></h5>
                                 <img src="img/shop-details/details-payment.png" alt="">
@@ -157,58 +155,55 @@
     </section>
     <!-- Shop Details Section End -->
 </form>
-
-    <!-- Related Section Begin -->
-    <section class="related spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h3 class="related-title">Related Product</h3>
-                </div>
+<!-- Related Section Begin -->
+<section class="related spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="related-title">Related Product</h3>
             </div>
-            <div class="row">
-                @foreach ($products-> slice(0, 4) as $pro)
-
-
-                <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{{ URL::TO ( 'image/'.$pro->image ) }}">
-                            <span class="label">New</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
+        </div>
+        <div class="row">
+            @foreach ($products-> slice(0, 4) as $pro)
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="{{ URL::TO ( 'image/'.$pro->image ) }}">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
                         </div>
-                        <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$67.24</h5>
-                            <div class="product__color__select">
-                                <label for="pc-1">
-                                    <input type="radio" id="pc-1">
-                                </label>
-                                <label class="active black" for="pc-2">
-                                    <input type="radio" id="pc-2">
-                                </label>
-                                <label class="grey" for="pc-3">
-                                    <input type="radio" id="pc-3">
-                                </label>
-                            </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
                         </div>
                     </div>
                 </div>
-                @endforeach
             </div>
+            @endforeach
         </div>
-    </section>
-    <!-- Related Section End -->
+    </div>
+</section>
+<!-- Related Section End -->
 @include('proted.futter')
 @endsection

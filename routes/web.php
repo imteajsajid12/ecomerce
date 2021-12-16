@@ -8,24 +8,17 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\backendloginController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\CategoriesController;
 
 Route::get('/', [frontend::class, 'index'])->name('home');
 //google login
 Route::get('auth/google', [GoogleController::class,'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class,'handleGoogleCallback']);
 //end
-
 Auth::routes();
 
 Route::get('/home', [frontend::class, 'index'])->name('home');
-
-
-
 Route::get('/shop', [frontend::class, 'Shop'])->name('Shop');
-
-
-
 Route::get('/cart', [frontend::class, 'cart'])->name('cat');
 Route::get('/blog', [frontend::class, 'blog']);
 Route::get('/contacts', [frontend::class, 'contacts']);
@@ -35,42 +28,28 @@ Route::get('/about', [frontend::class, 'about']);
 Route::get('/shop-details', [frontend::class, 'shop_details']);
 Route::get('/blog-details', [frontend::class, 'blog_details']);
 Route::get('detelase/{id}', [frontend::class, 'detelse']);
-
-
-
-
-
 //scearch
 Route::get('scearch/', [frontend::class, 'scearch']);
-//product
 
-Route::get('/shop/man', [frontend::class, 'man']);
-
-Route::get('/shop/women', [frontend::class, 'women']);
-
-Route::get('shop/bag', [frontend::class, 'bag']);
-
-Route::get('shop/clothing', [frontend::class, 'clothing']);
-
-Route::get('/shop/shoes', [frontend::class, 'shoes']);
-
-Route::get('/shop/accessories', [frontend::class, 'accessories']);
-
-Route::get('/shop/kids', [frontend::class, 'kids']);
-
-
+//categories
+Route::get('/shop/{id}', [frontend::class, 'categories']);
+//Route::get('/shop/women', [frontend::class, 'women']);
+//Route::get('shop/bag', [frontend::class, 'bag']);
+//Route::get('shop/clothing', [frontend::class, 'clothing']);
+//Route::get('/shop/shoes', [frontend::class, 'shoes']);
+//Route::get('/shop/accessories', [frontend::class, 'accessories']);
+//Route::get('/shop/kids', [frontend::class, 'kids']);
 //end
 //caert
 Route::post('detelase/addcart', [HomeController::class, 'cart1'])->name('addcart');
 Route::get('cart/delete/{id}', [HomeController::class, 'deletecart']);
 Route::Post('cart/update', [HomeController::class, 'updatecart'])->name('update');
 Route::Post('cart/addcart', [HomeController::class, 'ordernow'])->name('ordernow');
-
 Route::get('mail', [HomeController::class, 'mail']);
 
 
 
-///admin
+///admin deshbord
 
 Route::get('/admin/home', [AdminController::class, 'admin1']);
 Route::get('admin', [backendloginController::class, 'showLoginForm'])->name('admin.login');
@@ -87,7 +66,6 @@ Route::get('admin/delete{id}', [AdminController::class, 'product_delete']);
 Route::get('/admin/order', [AdminController::class, 'order']);
 Route::get('admin/detelase/{id}', [AdminController::class, 'order_detelse']);
 Route::get('admin/add', [AdminController::class, 'delevery_delete'])->name('delevery_delete');
-
 //contracts
 Route::get('/admin/contacts', [AdminController::class, 'contracts']);
 Route::get('admin/contacts{id}', [AdminController::class, 'delete_contrects']);
@@ -95,5 +73,12 @@ Route::get('admin/contacts{id}', [AdminController::class, 'delete_contrects']);
 Route::get('/admin/sell', [AdminController::class, 'sell']);
 Route::get('admin/sell/{id}', [AdminController::class, 'sell_delete']);
 
+//category
+Route::get('/admin/categories', [CategoriesController::class, 'index'])->middleware('auth:admins')->name('categories');
+Route::post('/admin/categories/add', [CategoriesController::class, 'store'])->middleware('auth:admins')->name('categories.store');
+Route::post('/admin/categories', [CategoriesController::class, 'edit'])->middleware('auth:admins')->name('categories.edit');
+Route::post('/admin/categories{id}', [CategoriesController::class, 'destroy'])->middleware('auth:admins')->name('categories.destroy');
+
 ///test
 Route::get('test',[frontend::class,'test']);
+Route::get('mail',[HomeController::class,'mail']);

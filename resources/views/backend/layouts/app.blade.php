@@ -10,6 +10,7 @@
     Male Fashion
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  @stack('css')
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -17,16 +18,17 @@
   <link href="{{ asset('backend/assets/css/material-dashboard.css?v=2.1.2') }}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{{ asset('backend/assets/demo/demo.css') }}" rel="stylesheet" />
-  @stack('css')
+
+
+
 </head>
 
 <body class="">
-  
+
     <main class="py-4">
         @yield('content')
 
     </main>
-
 
       <!--   Core JS Files   -->
   <script src="{{ asset('backend/assets/js/core/jquery.min.js') }}"></script>
@@ -71,6 +73,8 @@
   <script src="{{ asset('backend/assets/js/material-dashboard.js?v=2.1.2') }}" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="{{ asset('backend/assets/demo/demo.js') }}"></script>
+
+  @stack('js')
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -249,7 +253,8 @@
 
     });
   </script>
-  @stack('js')
+
+
 </body>
 
 </html>

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,10 +33,9 @@ class MyTestMail extends Mailable
      */
     public function build()
     {
-        $userid= auth::id();
+        return $this->markdown('emails.testmail') //pass here your email blade file
+	    	->with('details',$this->details);
 
-        return $this->subject('Mail from Male Fashion')
-                    ->view('emails.demoMail')->with('product',Order:: where ('user_id',$userid)->get());
 
     }
 }

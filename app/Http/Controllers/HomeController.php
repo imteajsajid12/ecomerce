@@ -37,7 +37,6 @@ class HomeController extends Controller
     public function cart1(Request $req)
     {
         $cart = Cart::where('product_id', $req->product_id)->first();
-
         if (!is_null($cart)) {
             $cart->increment('quantity');
         } else {
@@ -89,37 +88,37 @@ class HomeController extends Controller
                 $order->payment = $req['payment'];
                 $order->save();
                 $details = [
-                    'title' => 'Male Fashion',
-                    'body' => 'Dear Coustomer Your Product Delevery Soon'
+                    'title' => 'LARRYBRIN',
+                    'body' => 'Dear Customer Your Product Delevery Soon',
+                    'auth' => Auth::user(),
+                    'order' => Order:: where('user_id', Auth::id())->get()
                 ];
-
-                Mail::to($req['email'])->send(new \App\Mail\MyTestMail($details));
-
+                Mail::to($req['email'])->queue(new \App\Mail\MyTestMail($details));
                 $details = [
-                    'title' => 'Male Fashion',
-                    'body' => 'Dear admin one user send a order'
+                    'title' => 'LARRYBRIN',
+                    'body' => 'Dear admin one user send a order',
+                    'auth' => Auth::user(),
+                    'order' => Order:: where('user_id', Auth::id())->get()
                 ];
-
-                Mail::to('taijulhira2686@gmail.com')->send(new \App\Mail\MyTestMail($details));
+                Mail::to('taijulhira2686@gmail.com')->queue(new \App\Mail\MyTestMail($details));
                 //user
-
                 //->with( Member:: where ('user_id',$userid)->delete())
 
-
             }
-        return redirect('/shop')->with(Cart::where('user_id', $userid)->delete())
-            ->with('success', 'send a mail,your product delevery on 72h thank you.');
+        return redirect('/shop')
+        ->with(Cart::where('user_id', $userid)->delete())
+        ->with('success', 'send a mail... your product delivery Soon thank you....');
     }
     function mail()
     {
-        //mail
         $details = [
-            'title' => 'Time Zone',
-            'body' => 'Dear admin one user send a order'
-        ];
+            'title' => 'LARRYBRIN',
+            'body' => 'Dear admin one user send a order',
+            'auth' => Auth::user(),
+            'order' => Order:: where('user_id', Auth::id())->get()
 
-        Mail::to('taijulhira2686@gmail.com')->send(new \App\Mail\MyTestMail($details));
-        //end
-        return back();
+        ];
+        Mail::to('imteajsajid1@gmail.com')->send(new \App\Mail\MyTestMail($details));
+    
     }
 }

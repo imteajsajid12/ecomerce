@@ -25,6 +25,13 @@
               </li>
 
             <li class="nav-item ">
+                <a class="nav-link" href="{{ route('categories') }}">
+                  <i class="material-icons">library_books</i>
+                  <p>Add Categories</p>
+                </a>
+              </li>
+
+            <li class="nav-item ">
               <a class="nav-link" href="{{ asset('admin/product_table') }}">
                 <i class="material-icons">content_paste</i>
                 <p>Product List</p>

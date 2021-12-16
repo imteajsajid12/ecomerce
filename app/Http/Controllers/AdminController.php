@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\categories;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
@@ -27,10 +28,22 @@ class AdminController extends Controller
     }
     public function product()
     {
-        return view('backend.add_product');
+
+
+        return view('backend.add_product')->with('categories',categories::all());
     }
     public function admin_add(Request $req)
     {
+        //validation
+        $this->validate($req, [
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'color' => 'required',
+            'details' => 'required|max:1000',
+            'photo' => 'required',
+            'catagory' => 'required',
+        ]);
         $member = new Product();
         $image = $req->file('photo');
         $file_name = time() . '.' . $image->getClientOriginalExtension();
@@ -47,6 +60,8 @@ class AdminController extends Controller
         $member->name = $data['name'];
         $member->detelse = $data['details'];
         $member->catagory = $data['catagory'];
+        $member->quantity = $data['quantity'];
+        $member->color = $data['color'];
         $member->price = $data['price'];
         $member->image = $file_name;
         $member->image2 = $file_name2;

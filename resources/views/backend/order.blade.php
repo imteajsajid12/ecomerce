@@ -25,17 +25,11 @@
                       <thead class=" text-primary">
                         <tr>
                             <th>Name</th>
-                            <th>Gmail</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-
-                            <th>Prodact </th>
+                            <th>Image </th>
+                            <th>Color </th>
                             <th>Quantity</th>
                             <th>Payment</th>
-
                             <th>Order_Date</th>
-
-
                             <th>Action</th>
 
                         </tr>
@@ -43,27 +37,17 @@
                       <tbody>
                           <tr>
                         @foreach ($order as $pro)
-
-                        <td>{{ $pro->User->name }}</td>
-                        <td>{{ $pro->email  }}</td>
-                        <td>{{ $pro->phone }}</td>
-
-                        <td style="width: 150px;">{{ $pro->city}}<b></b>->{{ $pro->address }} <br>Postcode:-{{ $pro->postcode}}</td>
-
-                        <td><img src="{{URL::to('image/'.$pro->Product->image)  }}" height="100px;" width="85px;" alt="{!! 'image/' !!}" ><br><h5>{{  $pro->Product->name }}</h5></td>
-                        <td><h3>{{ $pro->quantity}}</h3></td>
+                        <td>{{  $pro->Product->name}}</td>
+                        <td><img src="{{URL::to('image/'.$pro->Product->image)  }}" height="100px;" width="85px;" alt="{!! 'image/' !!}"></td>
+                        <td>{{ $pro->color}}</td>
+                        <td>{{ $pro->quantity}}</td>
                         <td>{{ $pro->payment}}</td>
-
                         <td>{{ $pro->created_at}}</td>
-
-                        <td><a href="{{ URL::TO ('admin/detelase/'.$pro->user_id) }}"class="btn btn-success" >Show</a></td>
+                        <td><a href="{{ URL::TO ('admin/details/'.$pro->id) }}"class="btn btn-success" >Show</a></td>
                         </tr>
                         @endforeach
                       </tbody>
-
                     </table>
-
-
                   </div>
                 </div>
               </div>

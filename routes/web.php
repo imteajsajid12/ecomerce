@@ -19,15 +19,15 @@ Auth::routes();
 
 Route::get('/home', [frontend::class, 'index'])->name('home');
 Route::get('/shop', [frontend::class, 'Shop'])->name('Shop');
-Route::get('/cart', [frontend::class, 'cart'])->name('cat');
+Route::get('/cart', [frontend::class, 'cart'])->name('cart');
 Route::get('/blog', [frontend::class, 'blog']);
 Route::get('/contacts', [frontend::class, 'contacts']);
 Route::post('contacts/add', [frontend::class, 'contacts_add'])->name('contact_add');
-Route::get('/chakout', [frontend::class, 'chakout']);
+Route::get('/checkout', [frontend::class, 'checkout']);
 Route::get('/about', [frontend::class, 'about']);
 Route::get('/shop-details', [frontend::class, 'shop_details']);
 Route::get('/blog-details', [frontend::class, 'blog_details']);
-Route::get('detelase/{id}', [frontend::class, 'detelse']);
+Route::get('details/{id}', [frontend::class, 'details']);
 //scearch
 Route::get('scearch/', [frontend::class, 'scearch']);
 
@@ -64,7 +64,7 @@ Route::get('admin/delete{id}', [AdminController::class, 'product_delete']);
 //end
 //order
 Route::get('/admin/order', [AdminController::class, 'order']);
-Route::get('admin/detelase/{id}', [AdminController::class, 'order_detelse']);
+Route::get('admin/details/{id}', [AdminController::class, 'order_details']);
 Route::get('admin/add', [AdminController::class, 'delevery_delete'])->name('delevery_delete');
 //contracts
 Route::get('/admin/contacts', [AdminController::class, 'contracts']);

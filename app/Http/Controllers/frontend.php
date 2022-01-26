@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\categories;
 use App\Models\Contact;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -15,20 +16,20 @@ class frontend extends Controller
     public function index()
     {
         return view('index')
-        ->with('product', Product::where('catagory', 'women')->latest()->get())
-        ->with('product1', Product::where('catagory', 'men')->latest()->get());
+            ->with('product', Product::where('catagory', 'women')->latest()->get())
+            ->with('product1', Product::where('catagory', 'men')->latest()->get());
     }
     public function Shop()
     {
         return view('shop')
-        ->with('product', Product::paginate(20))
-        ->with('categories',categories::all());
+            ->with('product', Product::paginate(20))
+            ->with('categories', categories::all());
     }
     public function cart()
     {
         $user_id = Auth::id();
         return view('shopping-cart')
-        ->with('product', cart::where('user_id', $user_id)->get());
+            ->with('product', cart::where('user_id', $user_id)->get());
     }
     public function blog()
     {
@@ -47,11 +48,11 @@ class frontend extends Controller
         $contact->save();
         return back();
     }
-    public function chakout()
+    public function checkout()
     {
         $user_id = Auth::id();
         return view('checkout')
-        ->with('product', cart::where('user_id', $user_id)->get());
+            ->with('product', cart::where('user_id', $user_id)->get());
     }
     public  function about()
     {
@@ -65,11 +66,11 @@ class frontend extends Controller
     {
         return view(' blog-details');
     }
-    public function  detelse($id)
+    public function  details($id)
     {
         return view(' shop-details')
-        ->with('product', Product::find($id))
-        ->with('products', Product::all());
+            ->with('product', Product::find($id))
+            ->with('products', Product::all());
     }
     //cart
     public function cart1(Request $req)
@@ -135,17 +136,20 @@ class frontend extends Controller
 
     public function  test()
     {
-        return view('emails.demoMail')
-        ->with('product', Order::all());
+
+        $kk= Order::whereDate('created_at', Carbon::today())->get();
+        $orders = $kk->where('user_id', Auth::id());
+        // $kk=$orders->where('created_at', 'like', '%' .'2022'. '%');
+        dd($orders);
+
     }
     //
     //product
     public function  categories($id)
     {
         return view('shop')
-        ->with('product', Product::where('catagory', $id)->paginate(20))
-        ->with('categories',categories::all());
-
+            ->with('product', Product::where('catagory', $id)->paginate(20))
+            ->with('categories', categories::all());
     }
 
     // scearch
@@ -153,8 +157,8 @@ class frontend extends Controller
     public function scearch(Request $req)
     {
         return view('shop')
-        ->with('product', Product::where('name', 'like', '%' . $req->input('qurey') . '%')
-        -> orwhere('catagory', 'like', '%' . $req->input('qurey') . '%')->paginate(20))
-        ->with('categories',categories::all());
+            ->with('product', Product::where('name', 'like', '%' . $req->input('qurey') . '%')
+                ->orwhere('catagory', 'like', '%' . $req->input('qurey') . '%')->paginate(20))
+            ->with('categories', categories::all());
     }
 }

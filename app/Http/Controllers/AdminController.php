@@ -137,20 +137,22 @@ class AdminController extends Controller
         return view('backend.order')
             ->with('order', Order::all());
     }
-    public function order_detelse($id)
+    public function order_details($id)
     {
         return view('backend.delevery_product')
-            ->with('data', Order::where('user_id', $id)->get());
+            ->with('data', Order::where('id', $id)->get());
     }
     public function delevery_delete(Request $req)
-    {
+    {   $data = Order::where('id', $req['id'])->first();
+        //dd($data->product_id);
         $order = new Sell();
+        $order->product_id = $data->product_id;
         $order->total_price = $req['total'];
         $order->save();
-        Order::where('user_id', $req['id'])->delete();
-        return redirect('admin/product_table');
-        return back();
-    }
+        //Order::where('id', $req['id'])->delete();
+        $data->delete();
+        return redirect('/admin/order');
+        }
     public function sell()
     {
         return view('backend.sell')

@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="product__item__text">
                                     <h6>{{ $pro->name }}</h6>
-                                    <a href="{{ URL::TO ('detelase/'.$pro->id ) }}" class="add-cart">+ Add To Cart</a>
+                                    <a href="{{ URL::TO ('details/'.$pro->id ) }}" class="add-cart">+ Add To Cart</a>
                                     {{--<div class="rating">
                                         <i class="fa fa-star-o"></i>
                                         <i class="fa fa-star-o"></i>

@@ -1,5 +1,16 @@
 @extends('layouts.app')
 @section( 'content')
+{{--validation--}}
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+{{--end validation--}}
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
     <div class="container">
@@ -76,7 +87,7 @@
                                 @foreach ($product as $key=> $pro)
                                 @php
                                 $totalp =$pro->product->price * $pro->quantity;
-                                $total+=$totalp
+                                $total_price = $total+=$totalp;
                                 @endphp
                                 <ul class="checkout__total__products">
                                     <li>
@@ -86,8 +97,8 @@
                                 </ul>
                                 @endforeach
                                 <ul class="checkout__total__all">
-                                    <li>Subtotal <span>{{ $total }} Tk</span></li>
-                                    <li>Total <span>{{ $total }} Tk</span></li>
+                                    <li>Subtotal <span>{{ $total }}$</span></li>
+                                    <li>Total <span>{{ $total_price }}$</span></li>
                                 </ul>
                                 <p>Thank you dear coustomer.</p>
                                 <div class="checkout__input__checkbox">

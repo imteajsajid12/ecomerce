@@ -1,7 +1,7 @@
 @component('mail::message')
 # LARRYBRIN
-
-Dear {{$details['auth']->name}} Your  Product Delivery Soon .....
+{{$details['body']}}
+{{--Dear {{$details['auth']->name}} Your  Product Delivery Soon .....--}}
 
 @php
 $total=0;
@@ -12,11 +12,14 @@ $total=0;
 @foreach ($details['order'] as $order)
 | {{$order->product->name}}  | {{$order->quantity}} |$ {{$order->product->price}} |
 @php
-$subtotal=$total+=$order->product->price;
+$subtotal=$order->quantity * $order->product->price;
+@endphp
+@php
+$total_price=$total+=$subtotal;
 @endphp
 @endforeach
 | ------------- |:-------------:       | --------:|
-|               |                     | $ {{$subtotal}}  |
+|               |                     | $ {{$total}}  |
 @endcomponent
 
 Thanks <br>

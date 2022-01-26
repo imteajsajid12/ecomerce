@@ -16,7 +16,6 @@
              @else
              <a href="{{ route('login') }}" role="button" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre></a><i class="fa fa-user" style="font-size:19px; color:rgb(12, 12, 12)">
 
-
                  {{ Auth::user()->name }} </i>
 
              <ul>
@@ -37,8 +36,8 @@
      </div>
      <div class="offcanvas__nav__option">
          <a href="#" class="search-switch"><img src="{{ asset('img/icon/search.png') }}" alt=""></a>
-         <a href="#"><img src="img/icon/heart.png" alt=""></a>
-         <a href="{{ asset('/cart') }}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
+         {{--<a href="#"><img src="img/icon/heart.png" alt=""></a>--}}
+         <a href="{{route ('cart') }}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
          <div class="price">{{App\Models\Cart::total()}}</div>
      </div>
      <div id="mobile-menu-wrap"></div>
@@ -55,7 +54,7 @@
              <div class="row">
                  <div class="col-lg-6 col-md-7">
                      <div class="header__top__left">
-                         <p>Free shipping, 30-day return or refund guarantee.</p>
+
                      </div>
                  </div>
                  <div class="col-lg-6 col-md-5">
@@ -108,7 +107,7 @@
                              <ul class="dropdown">
                                  <li><a href="{{ asset('/about') }}">About Us</a></li>
 
-                                 <li><a href="{{ asset('/cart') }}">Shopping Cart</a></li>
+                                 <li><a href="{{route ('cart') }}">Shopping Cart</a></li>
                                  ]
                              </ul>
                          </li>
@@ -121,7 +120,7 @@
                  <div class="header__nav__option">
                      <a href="#" class="search-switch"><img src="{{ asset('img/icon/search.png') }}" alt=""></a>
                      {{--<a href="#"><img src="img/icon/heart.png" alt=""></a>--}}
-                     <a href="{{ asset('/cart') }}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
+                     <a href="{{route ('cart') }}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
                      <div class="price">{{App\Models\Cart::total()}}</div>
                  </div>
              </div>

@@ -79,7 +79,7 @@
                     <div class="col-lg-8">
                         <div class="product__details__text">
                             <h4>{{$product->name }}</h4>
-                            <h3>Price:- {{ $product->price }}Tk</h3>
+                            <h3>Price:- ${{ $product->price }}</h3>
                             <p> {{ $product->detelse }}</p>
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="product__details__option__size">
                                     <span>Color:</span>
-                            
+
                                     {{--<label class="c-1" for="sp-1">
                                         <input type="radio" value="black" name="color" id="sp-1">
                                     </label>
@@ -119,7 +119,7 @@
                                         <input type="radio" value="green" name="color" id="sp-">
                                     </label>--}}
                                     <input class="form-control" value="" list="browsers" name="color" required="" />
-                                    <datalist id="browsers">
+                                    <datalist>
                                         @foreach ($product->color as $color)
                                         <option>{{$color}}</option>
                                         @endforeach
@@ -129,9 +129,7 @@
                             <input type="text" name="product_id" value="{{ $product->id }}" hidden>
                             <div class="product__details__cart__option">
                                 <div class="quantity">
-
                                     <div class="pro-qty">
-
                                         <input type="text" name="quantity" placeholder="quantity" value="1">
                                     </div>
                                 </div>

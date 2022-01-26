@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -38,19 +39,40 @@ class HomeController extends Controller
     {
         $cart = Cart::where('product_id', $req->product_id)->first();
         if (!is_null($cart)) {
-            $cart->increment('quantity');
+            if ($cart->color == $req->color) {
+                $cart->quantity = $cart->quantity + $req->quantity;
+                $cart->save();
+                return redirect('/cart');
+            } else {
+                if ($req['size'] == null) {
+                    $size = "XL";
+                } else {
+                    $size = $req['size'];
+                }
+                $cart = new Cart();
+                $cart->user_id = Auth::id();
+                $cart->product_id = $req['product_id'];
+                $cart->quantity = $req['quantity'];
+                $cart->size = $size;
+                $cart->color = $req['color'];
+                $cart->save();
+                return redirect('/cart');
+            }
         } else {
+            if ($req['size'] == null) {
+                $size = "XL";
+            } else {
+                $size = $req['size'];
+            }
             $cart = new Cart();
             $cart->user_id = Auth::id();
             $cart->product_id = $req['product_id'];
-            $cart->quantity = "1";
-            $cart->size = $req['size'];
+            $cart->quantity = $req['quantity'];
+            $cart->size = $size;
             $cart->color = $req['color'];
             $cart->save();
-            // dd($req);
             return redirect('/cart');
         }
-        // return redirect('cart');
     }
 
     public function deletecart($id)
@@ -66,6 +88,18 @@ class HomeController extends Controller
 
     public function ordernow(Request $req, Order $order)
     {
+        //validation
+        $req->validate([
+            'name' => 'required',
+            'address' => 'required|max:255',
+            'homeaddress' => 'required|max:255',
+            'city' => 'required|max:255',
+            'postcode' => 'required|',
+            'phone' => 'required|',
+            'email' => 'email|',
+            'payment' => 'required|',
+        ]);
+
         $userid = auth::id();
         $allcard = Cart::where('user_id', $userid)->get();
         foreach ($allcard as $card)
@@ -87,27 +121,37 @@ class HomeController extends Controller
                 $order->email = $req['email'];
                 $order->payment = $req['payment'];
                 $order->save();
+                //product -
+                $product = Product::where('id', $card->quantity)->get();
+                $product->quantity = $product[0]['quantity'] - $order->quantity;
+                Product::where('id', $card->quantity)
+                    ->update(['quantity' => $product[0]['quantity'] - $order->quantity]);
+                //end product -
+
+                //order
+                $today = Order::whereDate('created_at', Carbon::today())->get();
+                $orders = $today->where('user_id', Auth::id());
+                //MAIL
                 $details = [
                     'title' => 'LARRYBRIN',
                     'body' => 'Dear Customer Your Product Delevery Soon',
                     'auth' => Auth::user(),
-                    'order' => Order:: where('user_id', Auth::id())->get()
+                    'order' => $orders,
                 ];
                 Mail::to($req['email'])->queue(new \App\Mail\MyTestMail($details));
+
                 $details = [
                     'title' => 'LARRYBRIN',
-                    'body' => 'Dear admin one user send a order',
+                    'body' => 'Dear admin  user send a order',
                     'auth' => Auth::user(),
-                    'order' => Order:: where('user_id', Auth::id())->get()
+                    'order' => Order::whereDate('created_at', Carbon::today())->get()
+                    //'order' => $today_order,
                 ];
                 Mail::to('taijulhira2686@gmail.com')->queue(new \App\Mail\MyTestMail($details));
-                //user
-                //->with( Member:: where ('user_id',$userid)->delete())
-
             }
         return redirect('/shop')
-        ->with(Cart::where('user_id', $userid)->delete())
-        ->with('success', 'send a mail... your product delivery Soon thank you....');
+            ->with(Cart::where('user_id', $userid)->delete())
+            ->with('success', 'send a mail... your product delivery Soon thank you....');
     }
     function mail()
     {
@@ -115,10 +159,9 @@ class HomeController extends Controller
             'title' => 'LARRYBRIN',
             'body' => 'Dear admin one user send a order',
             'auth' => Auth::user(),
-            'order' => Order:: where('user_id', Auth::id())->get()
+            'order' => Order::where('user_id', Auth::id())->get()
 
         ];
         Mail::to('imteajsajid1@gmail.com')->send(new \App\Mail\MyTestMail($details));
-    
     }
 }

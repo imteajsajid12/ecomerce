@@ -34,7 +34,7 @@ class MyTestMail extends Mailable
     public function build()
     {
         return $this->markdown('emails.testmail') //pass here your email blade file
-	    	->with('details',$this->details);
+        ->subject('Mail From  LARRYBRIN.Com')->with('details',$this->details);
 
 
     }

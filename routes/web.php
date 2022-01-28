@@ -9,6 +9,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\backendloginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\StripeController;
 
 Route::get('/', [frontend::class, 'index'])->name('home');
 //google login
@@ -82,3 +83,7 @@ Route::post('/admin/categories{id}', [CategoriesController::class, 'destroy'])->
 ///test
 Route::get('test',[frontend::class,'test']);
 Route::get('mail',[HomeController::class,'mail']);
+
+//payment
+Route::get('Payment', [StripeController::class, 'index'])->name('payment');
+Route::post('Payment', [StripeController::class, 'checkout'])->name('checkout.credit-card');

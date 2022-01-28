@@ -97,10 +97,10 @@
                                         <input type="radio" value="S" name="size" id="sm">
                                     </label>
                                 </div>
-                                <div class="product__details__option__size">
+                                <div class="product__details__option__color">
                                     <span>Color:</span>
 
-                                    {{--<label class="c-1" for="sp-1">
+                                    <label class="c-1" for="sp-1">
                                         <input type="radio" value="black" name="color" id="sp-1">
                                     </label>
                                     <label class="c-2" for="sp-2">
@@ -109,7 +109,7 @@
                                     <label class="c-3" value="black" name="color" for="sp-3">
                                         <input type="radio" value="orange" name="color" id="sp-3">
                                     </label>
-                                    <label class="c-4" value="black" name="color" for="sp-4">
+                                    <label class="c-4" value="green" name="color" for="sp-4">
                                         <input type="radio" value="rad" name="color" id="sp-4">
                                     </label>
                                     <label class="c-9" for="sp-9">
@@ -117,8 +117,8 @@
                                     </label>
                                     <label class="c-10" value="black"for="sp">
                                         <input type="radio" value="green" name="color" id="sp-">
-                                    </label>--}}
-                                    <input class="form-control" value="" list="browsers" name="color" required="" />
+                                    </label>
+                                    <input class="form-control" name="color" required="" />
                                     <datalist>
                                         @foreach ($product->color as $color)
                                         <option>{{$color}}</option>
@@ -127,6 +127,7 @@
                                 </div>
                             </div>
                             <input type="text" name="product_id" value="{{ $product->id }}" hidden>
+                            <input type="text" name="product_quantity" value="{{ $product->quantity }}" hidden>
                             <div class="product__details__cart__option">
                                 <div class="quantity">
                                     <div class="pro-qty">
@@ -163,6 +164,7 @@
         </div>
         <div class="row">
             @foreach ($products-> slice(0, 4) as $pro)
+            @if ($pro->quantity==!0)
             <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
                 <div class="product__item">
                     <div class="product__item__pic set-bg" data-setbg="{{ URL::TO ( 'image/'.$pro->image ) }}">
@@ -174,16 +176,16 @@
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6>Piqué Biker Jacket</h6>
+                        <h6>{{$pro->name}}</h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
+                        {{--<div class="rating">
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
-                        </div>
-                        <h5>$67.24</h5>
+                        </div>--}}
+                        <h5>${{$pro->price}}</h5>
                         <div class="product__color__select">
                             <label for="pc-1">
                                 <input type="radio" id="pc-1">
@@ -198,6 +200,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             @endforeach
         </div>
     </div>

@@ -15,8 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('product_id');
-            $table->string('user_id');
+            $table->unsignedBigInteger('product_id')->constrained('products')->onDeleted('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('user_id')->constrained('users')->onDeleted('cascade')->onUpdate('cascade');
             $table->string('quantity');
             $table->string('size');
             $table->string('color');
@@ -28,7 +28,6 @@ class CreateOrdersTable extends Migration
             $table->string('phone');
             $table->string('email');
             $table->string('payment');
-
             $table->timestamps();
         });
     }

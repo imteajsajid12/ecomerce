@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Auth;
 class Cart extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'product_id',
+        'quantity',
+        'user_id',
+        'color',
+        'size',
+    ];
+
+
     public function product(){
         return $this->belongsTo(Product::class);
     }

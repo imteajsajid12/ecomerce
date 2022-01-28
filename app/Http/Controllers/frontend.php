@@ -10,14 +10,16 @@ use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Foreach_;
 
 class frontend extends Controller
 {
     public function index()
     {
-        return view('index')
-            ->with('product', Product::where('catagory', 'women')->latest()->get())
-            ->with('product1', Product::where('catagory', 'men')->latest()->get());
+            return view('index')
+            ->with('Womens',Product::where('catagory', 'women')->latest()->get())
+            ->with('Mens', Product::where('catagory', 'men')->latest()->get());
+
     }
     public function Shop()
     {
@@ -135,12 +137,16 @@ class frontend extends Controller
     }
 
     public function  test()
-    {
-
-        $kk= Order::whereDate('created_at', Carbon::today())->get();
-        $orders = $kk->where('user_id', Auth::id());
-        // $kk=$orders->where('created_at', 'like', '%' .'2022'. '%');
-        dd($orders);
+    {   $database=11;
+        $req=12;
+        if($database >= $req){
+            return 'true';
+        }
+        else{
+            return 'false';
+        }
+        $cart = Cart::where('product_id', 1)->first();
+        dd($cart);
 
     }
     //

@@ -15,7 +15,7 @@ class CreateSellsTable extends Migration
     {
         Schema::create('sells', function (Blueprint $table) {
             $table->id();
-            $table->string('product_id');
+            $table->bigInteger('product_id')->constrained('products')->onDeleted('cascade');
             $table->string('total_price');
             $table->timestamps();
         });

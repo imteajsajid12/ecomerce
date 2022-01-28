@@ -10,6 +10,13 @@
     <strong>{{ $message }}</strong>
 </div>
 @endif
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+</div>
+@endif
+
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
         <div class="container">
@@ -81,6 +88,7 @@
 
                     <div class="row">
                         @foreach ($product as $pro)
+                        @if ($pro->quantity==!0)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="{{ URL::TO ( 'image/'.$pro->image ) }}">
@@ -113,6 +121,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         @endforeach
                     </div>
                     {{$product->links()}}

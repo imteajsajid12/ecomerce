@@ -38,12 +38,30 @@ class HomeController extends Controller
     public function cart1(Request $req)
     {
         $cart = Cart::where('product_id', $req->product_id)->first();
-        if (!is_null($cart)) {
-            if ($cart->color == $req->color) {
-                $cart->quantity = $cart->quantity + $req->quantity;
-                $cart->save();
-                return redirect('/cart');
-            } else {
+        if($req->product_quantity >= $req->quantity){
+            if (!is_null($cart)) {
+                if ($cart->color == $req->color) {
+                    $cart->quantity = $cart->quantity + $req->quantity;
+                    $cart->save();
+                    return redirect('/cart');
+                } else {
+                    if ($req['size'] == null) {
+                        $size = "XL";
+                    }
+                    else {
+                        $size = $req['size'];
+                    }
+                    $cart = new Cart();
+                    $cart->user_id = Auth::id();
+                    $cart->product_id = $req['product_id'];
+                    $cart->quantity = $req['quantity'];
+                    $cart->size = $size;
+                    $cart->color = $req['color'];
+                    $cart->save();
+                    return redirect('/cart');
+                }
+            }
+            else {
                 if ($req['size'] == null) {
                     $size = "XL";
                 } else {
@@ -58,21 +76,12 @@ class HomeController extends Controller
                 $cart->save();
                 return redirect('/cart');
             }
-        } else {
-            if ($req['size'] == null) {
-                $size = "XL";
-            } else {
-                $size = $req['size'];
-            }
-            $cart = new Cart();
-            $cart->user_id = Auth::id();
-            $cart->product_id = $req['product_id'];
-            $cart->quantity = $req['quantity'];
-            $cart->size = $size;
-            $cart->color = $req['color'];
-            $cart->save();
-            return redirect('/cart');
         }
+        else{
+            return redirect('/shop')->with('error','Quantity is not available. You can order maximum '.$req->product_quantity.' quantity');
+
+        }
+
     }
 
     public function deletecart($id)
@@ -82,12 +91,17 @@ class HomeController extends Controller
     }
     public function updatecart(Request $req)
     {
+        if($req->product_quantity >= $req->qty)  {
         Cart::where('product_id', $req['name'])->update(['quantity' => $req['qty']]);
         return back();
     }
-
+    else{
+        return redirect('/cart')->with('error','Quantity is not available. You can order maximum '.$req->product_quantity.' quantity');
+    }
+    }
     public function ordernow(Request $req, Order $order)
     {
+
         //validation
         $req->validate([
             'name' => 'required',
@@ -99,7 +113,6 @@ class HomeController extends Controller
             'email' => 'email|',
             'payment' => 'required|',
         ]);
-
         $userid = auth::id();
         $allcard = Cart::where('user_id', $userid)->get();
         foreach ($allcard as $card)
@@ -122,9 +135,9 @@ class HomeController extends Controller
                 $order->payment = $req['payment'];
                 $order->save();
                 //product -
-                $product = Product::where('id', $card->quantity)->get();
+                $product = Product::where('id', $card->product_id)->get();
                 $product->quantity = $product[0]['quantity'] - $order->quantity;
-                Product::where('id', $card->quantity)
+                Product::where('id', $card->product_id)
                     ->update(['quantity' => $product[0]['quantity'] - $order->quantity]);
                 //end product -
 

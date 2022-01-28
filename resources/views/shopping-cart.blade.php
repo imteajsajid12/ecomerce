@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section( 'content')
-
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+</div>
+@endif
 
 @php
 $total=0;
@@ -53,6 +58,7 @@ $total=0;
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <input type="text" name="name" value="{{$pro->product_id}}" hidden>
+                                            <input type="text" name="product_quantity" value="{{$pro->product->quantity}}" hidden>
                                             <button type="submit" class="btn btn-primary btn-sm">update</button>
                                         </div>
                 </div>
@@ -83,7 +89,7 @@ $total=0;
                     <li>Subtotal <span>{{ $total }} Tk</span></li>
                     <li>Total <span>{{ $total }} Tk</span></li>
                 </ul>
-                <a href="{{ asset('/checkout') }}" class="primary-btn">Proceed to checkout</a>
+                <a href="{{ asset('/checkout') }}" class="primary-btn disabled">Proceed to checkout</a>
             </div>
         </div>
     </div>

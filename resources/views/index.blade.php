@@ -105,7 +105,8 @@
             </div>
         </div>
         <div class="row product__filter">
-            @foreach ($product1->slice(0, 4) as $pro)
+            @foreach ($Mens->slice(0, 4) as $pro)
+            @if ($pro->quantity==!0)
             <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                 <div class="product__item">
                     <div class="product__item__pic set-bg" data-setbg="{{ URL::TO ( 'image/'.$pro->image ) }}">
@@ -131,8 +132,10 @@
                     </div>
                 </div>
             </div>
+            @endif
             @endforeach
-            @foreach ($product->slice(0, 4) as $pro)
+            @foreach ($Womens->slice(0, 4) as $pro)
+            @if ($pro->quantity==!0)
             <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
                 <div class="product__item sale">
                     <div class="product__item__pic set-bg" data-setbg="{{ URL::TO ( 'image/'.$pro->image ) }}">
@@ -168,6 +171,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             @endforeach
 
 
@@ -248,7 +252,7 @@
                     <h2>Instagram</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.</p>
-                    <h3>#Male_Fashion</h3>
+                    <h3 style="font-family: 'Lobster', cursive;">LARRYBRIN</h3>
                 </div>
             </div>
         </div>

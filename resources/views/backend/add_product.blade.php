@@ -10,6 +10,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+                        {{--messege--}}
                         @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -25,6 +26,8 @@
                             <strong>{{ $message }}</strong>
                         </div>
                         @endif
+                        {{--end messege--}}
+
                         <div class="card">
                             <div class="card-header card-header-primary">
                                 <h4 class="card-title">Product Profile</h4>
@@ -64,8 +67,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                         <!-- Copy Fields -->
-                                         <div class="copy hide" hidden>
+                                        <!-- Copy Fields -->
+                                        <div class="copy hide" hidden>
                                             <div class="control-group input-group" style="margin-top:10px">
                                                 <input type="text" name="color[]" class="form-control" placeholder="Enter Color Here">
                                                 <div class="input-group-btn">

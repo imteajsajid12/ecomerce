@@ -37,7 +37,8 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <form action="#">
+                <form>
+
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
@@ -46,7 +47,7 @@
 
                             <div class="checkout__input">
                                 <p>Name<span>*</span></p>
-                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="text" name="name" id="name" placeholder="Name" required>
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
@@ -66,13 +67,13 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text" name="phone" required>
+                                        <input type="number" name="phone" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text" name="email" required>
+                                        <input type="email" name="email" required>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +99,7 @@
                                 @endforeach
                                 <ul class="checkout__total__all">
                                     <li>Subtotal <span>{{ $total }}$</span></li>
-                                    <li>Total <span>{{ $total_price }}$</span></li>
+                                    {{--<li>Total <span>{{ $total_price }}$</span></li>--}}
                                 </ul>
                                 <p>Thank you dear coustomer.</p>
                                 <div class="checkout__input__checkbox">
@@ -108,22 +109,52 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <div class="checkout__input__checkbox">
-                                    <label for="paypal">
-                                        Bkash
-                                        <input type="checkbox" id="paypal" name="payment" value="bikash">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                                <button>jj</button>
+                                <button type="submit" class="site-btn ">PLACE ORDER</button>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+        </div>
     </section>
 </form>
+
+
 <!-- Checkout Section End -->
 @include('proted.futter')
+<script>
+    function kk() {
+        // $(document).ready(function() {
+        //    $(document).on('click', '.savebtn', function() {
+        //alert("hi");
+        //var name = document.getElementByid('name').value;
+        //var address = document.getElementById('address').value;
+        //var homeaddress = document.getElementById('homeaddress').value;
+        //var city = document.getElementById('city').value;
+        //var postcode = document.getElementById('postcode').value;
+        //var phone = document.getElementById('phone').value;
+        //var email = document.getElementById('email').value;
+        axios.post('/payment', {
+                name: "hi",
+                //address: address,
+                //homeaddress: homeaddress,
+                //city: city,
+                //postcode: postcode,
+                //phone: phone,
+                //email: email,
+            })
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        //console.log(element);
+        //    })
+        //});
+    }
+
+</script>
 @endsection

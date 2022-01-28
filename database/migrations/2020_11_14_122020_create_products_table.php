@@ -14,9 +14,10 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id')->constrained('products')
+            ->onDeleted('cascade')
+            ->onUpdate('cascade');
             $table->string('name');
-            // $table->string('Photo');
             $table->string('price');
             $table->string('color');
             $table->string('quantity');
@@ -24,7 +25,7 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->string('image2');
             $table->string('image3');
-            $table->string('detelse',1000);
+            $table->longText('detelse');
             $table->timestamps();
         });
     }

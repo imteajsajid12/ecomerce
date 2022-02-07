@@ -119,16 +119,24 @@
                     </div>
                     <div class="product__item__text">
                         <h6>{{ $pro->name }}</h6>
-                        <a href="{{ URL::TO ('detelase/'.$pro->id ) }}" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
+                        <a href="{{ URL::TO ('details/'.$pro->id ) }}" class="add-cart">+ Add To Cart</a>
+                        {{--<div class="rating">
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
+                        </div>--}}
+                        <h5>$ {{ $pro->price }} </h5>
+                        <div class="product__color__select">
+                            @foreach ($pro->color as $color )
+                            @if( $color == !null )
+                            <label for="pc-4" style="background: {{$color}}">
+                                <input type="radio" id="pc-4">
+                            </label>
+                            @endif
+                            @endforeach
                         </div>
-                        <h5>{{ $pro->price }} Tk</h5>
-
                     </div>
                 </div>
             </div>
@@ -148,25 +156,23 @@
                     </div>
                     <div class="product__item__text">
                         <h6>{{ $pro->name }}</h6>
-                        <a href="{{ URL::TO ('detelase/'.$pro->id ) }}" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
+                        <a href="{{ URL::TO ('details/'.$pro->id ) }}" class="add-cart">+ Add To Cart</a>
+                        {{--<div class="rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star-o"></i>
-                        </div>
-                        <h5>{{$pro->price }} Tk</h5>
+                        </div>--}}
+                        <h5>$ {{$pro->price }} </h5>
                         <div class="product__color__select">
-                            <label for="pc-16">
-                                <input type="radio" id="pc-16">
+                            @foreach ($pro->color as $color )
+                            @if( $color == !null )
+                            <label for="pc-4" style="background: {{$color}}">
+                                <input type="radio" id="pc-4">
                             </label>
-                            <label class="active black" for="pc-17">
-                                <input type="radio" id="pc-17">
-                            </label>
-                            <label class="grey" for="pc-18">
-                                <input type="radio" id="pc-18">
-                            </label>
+                            @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>

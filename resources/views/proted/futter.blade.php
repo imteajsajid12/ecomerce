@@ -15,10 +15,9 @@
                 <div class="footer__widget">
                     <h6>Shopping</h6>
                     <ul>
-                        <li><a href="{{ asset('shop') }}">Clothing Store</a></li>
-                        <li><a href="{{ asset('shop/shoes') }}">Trending Shoes</a></li>
-                        <li><a href="{{ asset('shop/accessories') }}">Accessories</a></li>
-                        <li><a href="{{ asset('cart') }}">Sale</a></li>
+                        @foreach($All_page as $categories)
+                        <li><a href="{{ asset('/shop/'.$categories->name) }}">{{$categories->name}}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

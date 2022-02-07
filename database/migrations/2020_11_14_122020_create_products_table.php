@@ -14,18 +14,18 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->increments('id')->constrained('products')
-            ->onDeleted('cascade')
-            ->onUpdate('cascade');
+            $table->id();
             $table->string('name');
             $table->string('price');
-            $table->string('color');
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
             $table->string('quantity');
             $table->string('catagory');
+            $table->string('video')->nullable();
             $table->string('image');
             $table->string('image2');
             $table->string('image3');
-            $table->longText('detelse');
+            $table->longText('detailes');
             $table->timestamps();
         });
     }

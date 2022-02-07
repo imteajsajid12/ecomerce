@@ -2,13 +2,10 @@
 @section('content')
 @push('css')
 @endpush
-
 <div class="wrapper ">
-
     <div class="main-panel">
         @include('backend.proted.navebar')
         @include('backend.proted.manu')
-
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -57,11 +54,21 @@
                                             </datalist>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="form-group">
+                                            @foreach ($data->color as $color )
+                                            @if($color ==!null)
+                                            <div class="input-group control-group after-add-more">
                                                 <label class="bmd-label-floating">Color</label>
-                                                <input type="text" name="color[]" class="form-control" value="">
+                                                <input type="text" value={{$color}} name="color[]" class="form-control">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                                </div>
                                             </div>
+                                            @endif
+                                            @endforeach
                                         </div>
+                                         <!-- Copy Fields -->
+                                         <div class="input-group control-group items" id="items"></div>
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Quantity</label>
@@ -70,15 +77,13 @@
                                         </div>
                                     </div>
                             </div>
-
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Detailes</label>
                                         <div class="form-group">
                                             <label class="bmd-label-floating">please enter product details</label>
-                                            <textarea class="form-control" value="{{ $data->detelse}}" name="details" rows="5"></textarea>
+                                            <textarea class="form-control" value="{!! $data->detelse!!}" name="details" required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -115,6 +120,23 @@
         </div>
     </div>
     @push('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".add-more").click(function() {
+                //var html = $(".copy").html();
+                //$(".after-add-more").after(html);
+                //alert('keee')
+                //Append a new row of code to the "#items" div
+  $("#items").append('<div class="item" ><input type="text" class="form-control"  name="color[]"><button  class="btn btn-danger remove">Delete</button></div>');
+            });
+            $("body").on("click", ".remove", function() {
+                $('.item').remove();
+                //$(this).parents(".control-group").remove();
+                //$("#items").remove('<div><input type="text" class="form-control"  name="color[]"
+            });
 
+        });
+
+    </script>
     @endpush
     @endsection

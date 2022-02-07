@@ -4,9 +4,8 @@
 
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="" class="simple-text logo-normal">
-         Male Fashon
-
+        <div class="logo"><a href="{{asset('/admin/home')}}" class="simple-text logo-normal">
+            <h3 style="font-family: 'Lobster', cursive;">LARRYBRIN</h3>
           </a></div>
         <div class="sidebar-wrapper">
           <ul class="nav">
@@ -23,14 +22,6 @@
                   <p>Add product</p>
                 </a>
               </li>
-
-            <li class="nav-item ">
-                <a class="nav-link" href="{{ route('categories') }}">
-                  <i class="material-icons">library_books</i>
-                  <p>Add Categories</p>
-                </a>
-              </li>
-
             <li class="nav-item ">
               <a class="nav-link" href="{{ asset('admin/product_table') }}">
                 <i class="material-icons">content_paste</i>
@@ -39,9 +30,14 @@
             </li>
 
             <li class="nav-item ">
+                <a class="nav-link" href="{{ route('categories') }}">
+                  <i class="material-icons">library_books</i>
+                  <p>Add Categories</p>
+                </a>
+              </li>
+            <li class="nav-item ">
               <a class="nav-link" href="{{ asset('admin/order') }}">
                 <i class="material-icons">location_ons</i>
-
                 <p>Order</p>
               </a>
             </li>
@@ -49,6 +45,11 @@
               <a class="nav-link" href="{{ asset('admin/contacts') }}">
                 <i class="material-icons">bubble_chart</i>
                 <p>Contacts</p>
+              </a>
+            <li class="nav-item ">
+              <a class="nav-link" href="{{route('Shipping.index') }}">
+                <i class="material-icons">bubble_chart</i>
+                <p>Shipping</p>
               </a>
             </li>
             <li class="nav-item ">

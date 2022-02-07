@@ -36,42 +36,38 @@ class HomeController extends Controller
 
 
     public function cart1(Request $req)
-    {
+    { //validation
+
+        $this->validate($req, [
+            'quantity' => 'required',
+            'color' => 'required',
+            'size' => 'required',
+
+        ]);
         $cart = Cart::where('product_id', $req->product_id)->first();
         if($req->product_quantity >= $req->quantity){
             if (!is_null($cart)) {
-                if ($cart->color == $req->color) {
+                if ($cart->color == $req->color && $cart->size == $req->size) {
                     $cart->quantity = $cart->quantity + $req->quantity;
                     $cart->save();
                     return redirect('/cart');
                 } else {
-                    if ($req['size'] == null) {
-                        $size = "XL";
-                    }
-                    else {
-                        $size = $req['size'];
-                    }
                     $cart = new Cart();
                     $cart->user_id = Auth::id();
                     $cart->product_id = $req['product_id'];
                     $cart->quantity = $req['quantity'];
-                    $cart->size = $size;
+                    $cart->size =  $req['size'];
                     $cart->color = $req['color'];
                     $cart->save();
                     return redirect('/cart');
                 }
             }
             else {
-                if ($req['size'] == null) {
-                    $size = "XL";
-                } else {
-                    $size = $req['size'];
-                }
                 $cart = new Cart();
                 $cart->user_id = Auth::id();
                 $cart->product_id = $req['product_id'];
                 $cart->quantity = $req['quantity'];
-                $cart->size = $size;
+                $cart->size =  $req['size'];
                 $cart->color = $req['color'];
                 $cart->save();
                 return redirect('/cart');

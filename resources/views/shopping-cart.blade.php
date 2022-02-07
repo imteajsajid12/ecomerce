@@ -42,7 +42,13 @@ $total=0;
                                     <div class="product__cart__item__text">
                                         <h6>{{ $pro->product->name }}</h6>
                                         <h5>${{ $pro->product->price }}</h5>
-                                        <h6>{{ $pro->color }}</h6>
+                                        <h5>${{ $pro->size}}</h5>
+                                    </div>
+                                    <div class="product__details__option__color">
+                                        <label for="pc-4" style="background: {{$pro->color}}">
+                                            {{--<input type="radio" id="pc-4">--}}
+                                        </label>
+
                                     </div>
                                 </td>
                                 <form action="{{ route('update') }}" method="Post">

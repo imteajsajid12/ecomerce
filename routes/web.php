@@ -9,6 +9,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\backendloginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\StripeController;
 
 Route::get('/', [frontend::class, 'index'])->name('home');
@@ -66,7 +67,7 @@ Route::get('admin/delete{id}', [AdminController::class, 'product_delete']);
 //order
 Route::get('/admin/order', [AdminController::class, 'order']);
 Route::get('admin/details/{id}', [AdminController::class, 'order_details']);
-Route::get('admin/add', [AdminController::class, 'delevery_delete'])->name('delevery_delete');
+Route::get('admin/add', [AdminController::class, 'delivery_delete'])->name('delivery_delete');
 //contracts
 Route::get('/admin/contacts', [AdminController::class, 'contracts']);
 Route::get('admin/contacts{id}', [AdminController::class, 'delete_contrects']);
@@ -79,6 +80,10 @@ Route::get('/admin/categories', [CategoriesController::class, 'index'])->middlew
 Route::post('/admin/categories/add', [CategoriesController::class, 'store'])->middleware('auth:admins')->name('categories.store');
 Route::post('/admin/categories', [CategoriesController::class, 'edit'])->middleware('auth:admins')->name('categories.edit');
 Route::post('/admin/categories{id}', [CategoriesController::class, 'destroy'])->middleware('auth:admins')->name('categories.destroy');
+//Shipping('/
+Route::resource('/admin/Shipping', ShippingController::class)->middleware('auth:admins');
+
+
 
 ///test
 Route::get('test',[frontend::class,'test']);

@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\categories;
 use App\Models\Contact;
 use App\Models\Order;
+use App\Models\Shipping;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -54,7 +55,8 @@ class frontend extends Controller
     {
         $user_id = Auth::id();
         return view('checkout')
-            ->with('product', cart::where('user_id', $user_id)->get());
+            ->with('product', cart::where('user_id', $user_id)->get())
+            ->with('Shipping', Shipping::latest()->first());
     }
     public  function about()
     {
@@ -137,17 +139,9 @@ class frontend extends Controller
     }
 
     public function  test()
-    {   $database=11;
-        $req=12;
-        if($database >= $req){
-            return 'true';
-        }
-        else{
-            return 'false';
-        }
-        $cart = Cart::where('product_id', 1)->first();
-        dd($cart);
-
+    {
+        $data = Product::find(1);
+        dd($data->color);
     }
     //
     //product

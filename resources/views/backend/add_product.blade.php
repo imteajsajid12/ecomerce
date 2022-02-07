@@ -40,58 +40,70 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Name</label>
-                                                <input type="text" name="name" class="form-control">
+                                                <input type="text" required name="name" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Price</label>
-                                                <input type="Number" name="price" class="form-control">
+                                                <input type="Number" required name="price" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="inputPassword4">categories</label>
-                                            <input class="form-control" value="" list="browsers" name="catagory" required="" />
-                                            <datalist id="browsers">
-                                                @foreach ($categories as $categorie)
-                                                <option value="{{$categorie->name}}">{{$categorie->name}}</option>
+                                            <select name="catagory" id="catagory" required value="{{old('catagory')}}" class="form-control">
+                                                @foreach ($categories as $catagory)
+                                                <option value="{{ $catagory->name }}">{{ $catagory->name }}</option>
                                                 @endforeach
-                                            </datalist>
+                                            </select>
                                         </div>
+
                                         <div class="col-md-4">
                                             <div class="input-group control-group after-add-more">
                                                 <label class="bmd-label-floating">Color</label>
-                                                <input type="text" name="color[]" class="form-control">
+                                                <input type="text" required name="color[]" class="form-control">
                                                 <div class="input-group-btn">
                                                     <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- Copy Fields -->
-                                        <div class="copy hide" hidden>
-                                            <div class="control-group input-group" style="margin-top:10px">
-                                                <input type="text" name="color[]" class="form-control" placeholder="Enter Color Here">
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                                                </div>
-                                            </div>
+                                            <div class="input-group control-group items" id="items"></div>
                                         </div>
 
+
+                                        <div class="col-md-4">
+                                            <div class="input-group control-group after-add-more">
+                                                <label class="bmd-label-floating">Size</label>
+                                                <input type="text" required name="size[]" class="form-control">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-success add-more_size" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                                </div>
+                                            </div>
+                                            <div class="input-group control-group sizes" id="sizes"></div>
+                                        </div>
+
+                                        <!-- Copy Fields -->
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Quantity</label>
-                                                <input type="Number" name="quantity" class="form-control">
+                                                <input type="Number" required name="quantity" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Video Link</label>
+                                                <input type="url"  name="video" class="form-control">
                                             </div>
                                         </div>
                                     </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Detailes</label>
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">please enter product details</label>
-                                            <textarea id="summernote" class="form-control" name="details" rows="5"></textarea>
+                                            <label class="bmd-label-floating">please enter product detailes</label>
+                                            <textarea id="summernote" class="form-control" name="detailes" required rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +128,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -124,11 +135,18 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $(".add-more").click(function() {
-                var html = $(".copy").html();
-                $(".after-add-more").after(html);
+                //Append a new row of code to the "#items" div
+                $("#items").append('<div class="item" ><input type="text" class="form-control"  name="color[]"><button  class="btn btn-danger remove">Delete</button></div>');
+            });
+            $(".add-more_size").click(function() {
+                //Append a new row of code to the "#items" div
+                $("#sizes").append('<div class="size" ><input type="text" class="form-control"  name="size[]"><button  class="btn btn-danger remove_size">Delete</button></div>');
             });
             $("body").on("click", ".remove", function() {
-                $(this).parents(".control-group").remove();
+                $('.item').remove();
+            });
+            $("body").on("click", ".remove_size", function() {
+                $('.sizes').remove();
             });
 
         });

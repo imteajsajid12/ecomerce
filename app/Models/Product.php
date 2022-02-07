@@ -12,6 +12,7 @@ class Product extends Model
         'name',
         'price',
         'color',
+        'size',
         'quantity',
         'catagory',
         'image',
@@ -21,5 +22,6 @@ class Product extends Model
     ];
     protected $casts = [
         'color' => 'array',
+        'size' => 'array',
     ];
 }

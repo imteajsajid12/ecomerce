@@ -32,8 +32,10 @@
                                         <tr>
                                             <th>Photo</th>
                                             <th>Name</th>
-                                            <th>Prodect price</th>
-                                            <th>Prodact detalse</th>
+                                            <th>Product Quantity</th>
+                                            <th>Product price</th>
+                                            <th>Product color</th>
+                                            <th>product detailse</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -42,8 +44,16 @@
                                             @foreach ($product as $pro)
                                             <td> <img src="{{ URL::TO ('image/'.$pro->image) }}" height="100px;" width="60px;" alt="{!! 'image/'.$pro->photo !!}"></td>
                                             <td>{{ $pro->name }}</td>
-                                            <td>{{ $pro->price }} tk</td>
-                                            <td>{{ $pro->detelse }}</td>
+                                            <td>{{ $pro->quantity }}</td>
+                                            <td>${{ $pro->price }}</td>
+                                            <td>
+                                                <ul>
+                                                    @foreach ($pro->color as $color )
+                                                    <li>{{$color}}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                            <td>{{ $pro->detailes }}</td>
                                             <td><a href="{{ URL::TO ('admin/edite'.$pro->id) }}" class="btn btn-primary">Edite</a>
                                                 <a href="{{ URL::TO ('admin/delete'.$pro->id) }}" class="btn btn-danger" onclick="return confirm('Are You Sure?')">Delete</a></td>
                                         </tr>

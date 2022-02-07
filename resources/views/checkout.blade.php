@@ -88,7 +88,7 @@
                                 @foreach ($product as $key=> $pro)
                                 @php
                                 $totalp =$pro->product->price * $pro->quantity;
-                                $total_price = $total+=$totalp;
+                                $total_price = $total+=$totalp + $Shipping->shipping_price;
                                 @endphp
                                 <ul class="checkout__total__products">
                                     <li>
@@ -98,14 +98,15 @@
                                 </ul>
                                 @endforeach
                                 <ul class="checkout__total__all">
+                                    <li>Shipping <span>{{ $Shipping->shipping_price }}$</span></li>
                                     <li>Subtotal <span>{{ $total }}$</span></li>
                                     {{--<li>Total <span>{{ $total_price }}$</span></li>--}}
                                 </ul>
                                 <p>Thank you dear coustomer.</p>
                                 <div class="checkout__input__checkbox">
                                     <label for="payment">
-                                        Hand payment
-                                        <input type="checkbox" id="payment" name="payment" value="hand_cash">
+                                        Cash On Delivery
+                                        <input type="checkbox" id="payment" name="payment" value="cash on delivery">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>

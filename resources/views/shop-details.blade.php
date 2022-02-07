@@ -1,5 +1,15 @@
 @extends('layouts.app')
 @section('content')
+ {{--messege--}}
+ @if ($errors->any())
+ <div class="alert alert-danger">
+     <ul>
+         @foreach ($errors->all() as $error)
+         <li>{{ $error }}</li>
+         @endforeach
+     </ul>
+ </div>
+ @endif
 <form action="{{ route('addcart') }}" method="POST">
     @csrf
     <!-- Shop Details Section Begin -->
@@ -65,7 +75,7 @@
                             <div class="tab-pane" id="tabs-4" role="tabpanel">
                                 <div class="product__details__pic__item">
                                     <img src="{{ URL::TO ( 'image/'.$product->image3 ) }}" alt="">
-                                    <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1" class="video-popup"><i class="fa fa-play"></i></a>
+                                    <a href="{{$product->video}}" class="video-popup"><i class="fa fa-play"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -80,14 +90,17 @@
                         <div class="product__details__text">
                             <h4>{{$product->name }}</h4>
                             <h3>Price:- ${{ $product->price }}</h3>
-                            <p> {{ $product->detelse }}</p>
+                            <p> {{ $product->detailes }}</p>
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Size:</span>
-                                    <label for="xxl">xxl
-                                        <input type="radio" value="XXl" name="size" id="xxl">
+                                    @foreach ($product->size as $sizes)
+                                    <label for="{{$sizes}}">{{$sizes}}
+                                        <input type="radio" value="{{$sizes}}" name="size" id="{{$sizes}}" >
                                     </label>
-                                    <label class="active" for="xl">xl
+                                    @endforeach
+
+                                    {{--<label class="active" for="xl">xl
                                         <input type="radio" value="XL" name="size" id="xl">
                                     </label>
                                     <label for="l">l
@@ -95,15 +108,24 @@
                                     </label>
                                     <label for="sm">s
                                         <input type="radio" value="S" name="size" id="sm">
-                                    </label>
+                                    </label>--}}
                                 </div>
                                 <div class="product__details__option__color">
                                     <span>Color:</span>
-
-                                    <label class="c-1" for="sp-1">
-                                        <input type="radio" value="black" name="color" id="sp-1">
+                                    {{--@foreach ($product->color as $color)
+                                    @if( $color == !null )
+                                    <label>{{$color}}</label>
+                                    <input type="radio" value="{{$color}}" checked="checked" name="color" id="sp-1">
+                                    @endif
+                                    @endforeach--}}
+                                    @foreach ($product->color as $color)
+                                    @if( $color == !null )
+                                    <label class="{{$color}}" for="{{$color}}" style="background: {{$color}}">
+                                        <input type="radio"  value={{$color}} name="color" id="{{$color}}">
                                     </label>
-                                    <label class="c-2" for="sp-2">
+                                    @endif
+                                    @endforeach
+                                    {{--<label class="c-2" for="sp-2">
                                         <input type="radio" value="blue" name="color" id="sp-2">
                                     </label>
                                     <label class="c-3" value="black" name="color" for="sp-3">
@@ -117,13 +139,30 @@
                                     </label>
                                     <label class="c-10" value="black"for="sp">
                                         <input type="radio" value="green" name="color" id="sp-">
-                                    </label>
-                                    <input class="form-control" name="color" required="" />
-                                    <datalist>
-                                        @foreach ($product->color as $color)
-                                        <option>{{$color}}</option>
-                                        @endforeach
-                                    </datalist>
+                                    </label>--}}
+
+                                    {{--<input class="form-control" value=""name="color" required="" />
+                                            <datalist id="browsers">
+                                                @foreach ($product->color as $color)
+                                                <option value="{{$color}}">{{$color}}</option>
+                                    @endforeach
+                                    </datalist>--}}
+
+                                    {{--<label class="c-10" value="black"for="sp">
+                                    <select name="zone_id" id="zoneId" required value="{{old('zone_id')}}" class="form-control">
+                                        <option value="">Select Zone</option>
+                                        <option value="">kkkk</option>
+                                        <option value="">kkk</option>
+                                        {{--@foreach ($zones as $zone)
+                                        <option value="{{ $zone->id }}">{{ $zone->name }}</option>
+                                        @endforeach--}}
+                                    {{--</select>--}}
+
+
+
+
+
+
                                 </div>
                             </div>
                             <input type="text" name="product_id" value="{{ $product->id }}" hidden>
@@ -139,11 +178,11 @@
                             <div class="product__details__last__option">
                                 <h5><span>Guaranteed Safe Checkout</span></h5>
                                 <img src="img/shop-details/details-payment.png" alt="">
-                                <ul>
+                                {{--<ul>
                                     <li><span>SKU:</span> 3812912</li>
                                     <li><span>Categories:</span> Clothes</li>
                                     <li><span>Tag:</span> Clothes, Skin, Body</li>
-                                </ul>
+                                </ul>--}}
                             </div>
                         </div>
                     </div>
@@ -177,7 +216,7 @@
                     </div>
                     <div class="product__item__text">
                         <h6>{{$pro->name}}</h6>
-                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <a href="{{asset('/details/'.$pro->id)}}" class="add-cart">+ Add To Cart</a>
                         {{--<div class="rating">
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
@@ -187,15 +226,13 @@
                         </div>--}}
                         <h5>${{$pro->price}}</h5>
                         <div class="product__color__select">
-                            <label for="pc-1">
-                                <input type="radio" id="pc-1">
+                            @foreach ($pro->color as $color )
+                            @if( $color == !null )
+                            <label for="pc-4" style="background: {{$color}}">
+                                <input type="radio" id="pc-4">
                             </label>
-                            <label class="active black" for="pc-2">
-                                <input type="radio" id="pc-2">
-                            </label>
-                            <label class="grey" for="pc-3">
-                                <input type="radio" id="pc-3">
-                            </label>
+                            @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>

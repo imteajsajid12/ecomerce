@@ -107,17 +107,21 @@
                                         <i class="fa fa-star-o"></i>
                                     </div>--}}
                                     <h5>$ {{ $pro ->price }}</h5>
-                                    {{--<div class="product__color__select">
-                                        <label for="pc-4">
+                                    <div class="product__color__select">
+                                        @foreach ($pro->color as $color )
+                                        @if( $color == !null )
+                                        <label for="pc-4" style="background: {{$color}}">
                                             <input type="radio" id="pc-4">
                                         </label>
-                                        <label class="active black"  for="pc-5">
+                                        @endif
+                                        @endforeach
+                                        {{--<label class="active black"  for="pc-5">
                                             <input type="radio" id="pc-5">
                                         </label>
                                         <label class="grey" for="pc-6">
                                             <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>--}}
+                                        </label>--}}
+                                    </div>
                                 </div>
                             </div>
                         </div>

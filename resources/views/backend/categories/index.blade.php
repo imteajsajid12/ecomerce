@@ -70,6 +70,7 @@
                                             <td>{{ $categorie->name}}</td>
                                             <form action="{{route('categories.destroy',$categorie->id)}}" method="POST" onsubmit="return confirm('Are you sure you want to unenroll?');" style="display: inline-block;">
                                                 @csrf
+                                                {{--@method('DELETE')--}}
                                                 <td>
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </td>
